@@ -1,0 +1,6 @@
+class StudentMovies{
+    
+    public StudentMovies(){
+        
+    }
+}
