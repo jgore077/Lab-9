@@ -1,10 +1,13 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 public class studentMovies {
 	
@@ -30,10 +33,25 @@ public class studentMovies {
 		System.out.println(studentMovies.entrySet());
 	
 	}
+    public String movieToWatch(String[] studentNames){
+		//will throw null pointer exception if given a non-existent name but not adding try catchs for that
+        TreeSet<String> startSet = studentMovies.get(studentNames[0]);
+		Random rand = new Random();
+        for(int i=1;i<studentNames.length-1;i++){
+            startSet.retainAll(studentMovies.get(studentNames[i]));
+        }
+		int retIndex=0;
+		if(startSet.size()>=2){
+			retIndex = rand.nextInt(startSet.size());
+		}
+        return (String)((startSet.toArray())[retIndex]);
+    }
 	public static void main(String[] args) throws FileNotFoundException {
 		// TODO Auto-generated method stub
 
 		studentMovies a = new studentMovies("Movies.txt");
+		String b= a.movieToWatch(new String[]{"Kyrin","Jimmy","Dylan"});
+		System.out.println(b);
 	}
 
 }
