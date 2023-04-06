@@ -6,15 +6,19 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 import javax.swing.text.html.HTMLDocument.Iterator;
 
-public class studentMovies {
+public class StudentMovies {
 	
 	private Map<String, TreeSet<String>> studentMovies = new TreeMap<>(); 
 	
 	
-	public studentMovies(String fileName) throws FileNotFoundException {
+	public StudentMovies(String fileName) throws FileNotFoundException {
 	File file = new File(fileName);
 	Scanner scanner = new Scanner(file);
 		while (scanner.hasNext()) {
@@ -35,16 +39,25 @@ public class studentMovies {
 	}
     public String movieToWatch(String[] studentNames){
 		//will throw null pointer exception if given a non-existent name but not adding try catchs for that
-        TreeSet<String> startSet = studentMovies.get(studentNames[0]);
-		Random rand = new Random();
-        for(int i=1;i<studentNames.length-1;i++){
-            startSet.retainAll(studentMovies.get(studentNames[i]));
+        // studentMovies.get(studentNames[0])
+        int freq=0;
+        String highestVal="";
+        List<String> frequencyList = new ArrayList<String>();
+        TreeSet<String> startSet = new TreeSet<String>();
+        for(int i=1;i<studentNames.length;i++){
+            startSet.addAll(studentMovies.get(studentNames[i]));
+            frequencyList.addAll(studentMovies.get(studentNames[i]));
         }
-		int retIndex=0;
-		if(startSet.size()>=2){
-			retIndex = rand.nextInt(startSet.size());
-		}
-        return (String)((startSet.toArray())[retIndex]);
+        startSet.retainAll(studentMovies.get(studentNames[0]));
+        for(String term: startSet){
+             if(freq<=Collections.frequency(frequencyList, term)){
+                freq=Collections.frequency(frequencyList, term);
+                highestVal=term;
+             }
+        }
+            return highestVal;
+        
+       
     }
     
     /* Contributor: Kyrin Kalonji
@@ -72,8 +85,8 @@ public class studentMovies {
         };
         
         //Expected result that corresponds to each of the test case arrays above.
-        String[][] expectedResults = {{"Braveheart"}, {"The Shinning"}, {}, {"Die Hard"}, {"Fight Club", "The Shining", " The Terminator"},
-                                     {"Joker", "Inception"}, {"Scarface"}, {"Braveheart", "Room", "Die Hard"}, {"The Shining"}, {"The Godfather", "The Shinning"}};
+        String[][] expectedResults = {{"Braveheart"}, {"The Shining"}, {""}, {"Die Hard"}, {"Fight Club", "The Shining", "The Terminator"},
+                                     {"Joker", "Inception"}, {"Scarface"}, {"Braveheart", "Room", "Die Hard"}, {"The Shining"}, {"The Godfather", "The Shining"}};
 
         for (int i = 0; i < totalTests; i++) {
             String result = movieToWatch(testCases[i]);
@@ -89,7 +102,7 @@ public class studentMovies {
             }
         }
 
-        System.out.println("Total tests passed: " + passedTests + " out of " + totalTests);
+       System.out.println("Total tests passed: " + passedTests + " out of " + totalTests);
     }
     
 	public static void main(String[] args) throws FileNotFoundException {
@@ -100,4 +113,5 @@ public class studentMovies {
 	        System.out.println("Error: File not found.");
 	    }
 
+}
 }
