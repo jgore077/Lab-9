@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-import javax.swing.plaf.basic.BasicBorders.RadioButtonBorder;
-import javax.swing.text.html.HTMLDocument.Iterator;
-
 public class StudentMovies {
 	
 	private Map<String, TreeSet<String>> studentMovies = new TreeMap<>(); 
