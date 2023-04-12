@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
+import javax.swing.plaf.basic.BasicBorders.RadioButtonBorder;
 import javax.swing.text.html.HTMLDocument.Iterator;
 
 public class StudentMovies {
@@ -40,6 +41,7 @@ public class StudentMovies {
     public String movieToWatch(String[] studentNames){
 		//will throw null pointer exception if given a non-existent name but not adding try catchs for that
         // studentMovies.get(studentNames[0])
+        Random rand = new Random();
         int freq=0;
         String highestVal="";
         List<String> frequencyList = new ArrayList<String>();
@@ -51,6 +53,12 @@ public class StudentMovies {
         startSet.retainAll(studentMovies.get(studentNames[0]));
         for(String term: startSet){
              if(freq<=Collections.frequency(frequencyList, term)){
+                if(freq==Collections.frequency(frequencyList, term)){
+                   int decideWhatToDo = rand.nextInt(2);
+                    if(decideWhatToDo==1){
+                        continue;
+                    }
+                }
                 freq=Collections.frequency(frequencyList, term);
                 highestVal=term;
              }
